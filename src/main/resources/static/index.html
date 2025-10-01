@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PetShop - CRUD de Cachorros</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+</head>
+
+<body>
+    <div class="container">
+        <header class="header">
+            <div class="logo">
+                <i class="fas fa-paw"></i>
+                <h1>PetShop API</h1>
+            </div>
+            <p class="subtitle">Sistema de Gerenciamento de Cachorros</p>
+        </header>
+
+        <main class="main-content">
+            <aside class="sidebar">
+                <nav class="nav">
+                    <button class="nav-btn active" data-section="listar">
+                        <i class="fas fa-list"></i>
+                        Listar Cachorros
+                    </button>
+                    <button class="nav-btn" data-section="criar">
+                        <i class="fas fa-plus"></i>
+                        Adicionar Cachorro
+                    </button>
+                    <button class="nav-btn" data-section="buscar">
+                        <i class="fas fa-search"></i>
+                        Buscar
+                    </button>
+                    <button class="nav-btn" data-section="api-info">
+                        <i class="fas fa-code"></i>
+                        Endpoints API
+                    </button>
+                </nav>
+            </aside>
+
+            <div class="content">
+                <!-- Listar Cachorros Section -->
+                <section id="listar" class="section active">
+                    <div class="section-header">
+                        <h2><i class="fas fa-list"></i> Lista de Cachorros</h2>
+                        <button class="btn btn-primary" onclick="carregarCachorros()">
+                            <i class="fas fa-sync-alt"></i> Atualizar
+                        </button>
+                    </div>
+                    <div id="lista-cachorros" class="cards-container">
+                    </div>
+                </section>
+
+                <section id="criar" class="section">
+                    <div class="section-header">
+                        <h2><i class="fas fa-plus"></i> Adicionar Novo Cachorro</h2>
+                    </div>
+                    <form id="form-cachorro" class="form">
+                        <div class="form-group">
+                            <label for="nome">Nome do Cachorro *</label>
+                            <input type="text" id="nome" name="nome" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="nomeDono">Nome do Dono *</label>
+                            <input type="text" id="nomeDono" name="nomeDono" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="raca">Raça (deixe em branco para aleatória)</label>
+                            <input type="text" id="raca" name="raca" placeholder="Ex: Labrador, Poodle, etc.">
+                        </div>
+                        <div class="form-group">
+                            <label for="imagem">URL da Imagem (deixe em branco para aleatória)</label>
+                            <input type="url" id="imagem" name="imagem" placeholder="https://...">
+                        </div>
+                        <div class="form-actions">
+                            <button type="submit" class="btn btn-success">
+                                <i class="fas fa-save"></i> Salvar Cachorro
+                            </button>
+                            <button type="button" class="btn btn-secondary" onclick="limparFormulario()">
+                                <i class="fas fa-broom"></i> Limpar
+                            </button>
+                        </div>
+                    </form>
+                </section>
+
+                <section id="buscar" class="section">
+                    <div class="section-header">
+                        <h2><i class="fas fa-search"></i> Buscar Cachorros</h2>
+                    </div>
+                    <div class="search-options">
+                        <div class="search-tabs">
+                            <button class="search-tab active" data-type="nome">Por Nome</button>
+                            <button class="search-tab" data-type="raca">Por Raça</button>
+                        </div>
+                        <div class="search-input-group">
+                            <input type="text" id="search-input" placeholder="Digite para buscar...">
+                            <button class="btn btn-primary" onclick="buscarCachorros()">
+                                <i class="fas fa-search"></i> Buscar
+                            </button>
+                        </div>
+                    </div>
+                    <div id="resultados-busca" class="cards-container">
+                        <!-- Resultados da busca serão inseridos aqui -->
+                    </div>
+                </section>
+
+                <section id="api-info" class="section">
+                    <div class="section-header">
+                        <h2><i class="fas fa-code"></i> Endpoints da API</h2>
+                    </div>
+                    <div class="endpoints-container">
+                        <div class="endpoint-card">
+                            <div class="endpoint-method get">GET</div>
+                            <div class="endpoint-info">
+                                <code>/api/cachorros</code>
+                                <p>Listar todos os cachorros</p>
+                            </div>
+                        </div>
+                        <div class="endpoint-card">
+                            <div class="endpoint-method get">GET</div>
+                            <div class="endpoint-info">
+                                <code>/api/cachorros/{id}</code>
+                                <p>Buscar cachorro por ID</p>
+                            </div>
+                        </div>
+                        <div class="endpoint-card">
+                            <div class="endpoint-method post">POST</div>
+                            <div class="endpoint-info">
+                                <code>/api/cachorros</code>
+                                <p>Criar novo cachorro</p>
+                            </div>
+                        </div>
+                        <div class="endpoint-card">
+                            <div class="endpoint-method put">PUT</div>
+                            <div class="endpoint-info">
+                                <code>/api/cachorros/{id}</code>
+                                <p>Atualizar cachorro</p>
+                            </div>
+                        </div>
+                        <div class="endpoint-card">
+                            <div class="endpoint-method delete">DELETE</div>
+                            <div class="endpoint-info">
+                                <code>/api/cachorros/{id}</code>
+                                <p>Deletar cachorro</p>
+                            </div>
+                        </div>
+                        <div class="endpoint-card">
+                            <div class="endpoint-method get">GET</div>
+                            <div class="endpoint-info">
+                                <code>/api/cachorros/search/nome?nome=</code>
+                                <p>Buscar por nome</p>
+                            </div>
+                        </div>
+                        <div class="endpoint-card">
+                            <div class="endpoint-method get">GET</div>
+                            <div class="endpoint-info">
+                                <code>/api/cachorros/search/raca?raca=</code>
+                                <p>Buscar por raça</p>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            </div>
+        </main>
+
+        <div id="toast" class="toast"></div>
+    </div>
+
+    <!-- Modal para Editar -->
+    <div id="modal-editar" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3><i class="fas fa-edit"></i> Editar Cachorro</h3>
+                <span class="close">&times;</span>
+            </div>
+            <form id="form-editar" class="form">
+                <input type="hidden" id="edit-id">
+                <div class="form-group">
+                    <label for="edit-nome">Nome do Cachorro *</label>
+                    <input type="text" id="edit-nome" name="nome" required>
+                </div>
+                <div class="form-group">
+                    <label for="edit-nomeDono">Nome do Dono *</label>
+                    <input type="text" id="edit-nomeDono" name="nomeDono" required>
+                </div>
+                <div class="form-group">
+                    <label for="edit-raca">Raça</label>
+                    <input type="text" id="edit-raca" name="raca">
+                </div>
+                <div class="form-group">
+                    <label for="edit-imagem">URL da Imagem</label>
+                    <input type="url" id="edit-imagem" name="imagem">
+                </div>
+                <div class="form-actions">
+                    <button type="submit" class="btn btn-success">
+                        <i class="fas fa-save"></i> Salvar Alterações
+                    </button>
+                    <button type="button" class="btn btn-secondary" onclick="fecharModal()">
+                        <i class="fas fa-times"></i> Cancelar
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+
+</html>
