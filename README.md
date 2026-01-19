@@ -2,7 +2,7 @@
 
 Descrição
 ---------
-Projeto Java para gerenciar um pet shop (clientes, pets, agendamentos, produtos, etc.). Este README é um ponto de partida com instruções de build, execução, estrutura e como contribuir. Adapte os detalhes (endpoints, variáveis de ambiente, comandos específicos) conforme a implementação real do repositório.
+Projeto Java para gerenciar um pet shop (clientes, pets, agendamentos, produtos, etc.).
 
 Principais tecnologias
 ---------------------
@@ -26,3 +26,4 @@ Estrutura típica do projeto
 Contato
 -------
 Para dúvidas, abra uma issue no repositório ou contate o mantenedor: @oericpires
+
